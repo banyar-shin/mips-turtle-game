@@ -3,10 +3,8 @@
 
 .data
 	input:    .asciiz "\nInput: "
-	file:	  .asciiz "facts.txt"
 	gameover: .asciiz "Game Over!\nYou scored: "
-	heresa:   .asciiz "Here's a fact/tip on how you can contribute to marine life! Yay!\n - "
-	descrip:  .asciiz "This is a turtle game where you control the turtle to eat\nfood objects (yellow), and avoid trash objects (dark red).\nYou lose when you run out of lives. (Top Right)\n\nTo start, hit OK on the dialog and:\n - Use (W, A, S, D) to move and E to exit anytime.\n - Use R to reset the level in case of an issue.\nHave fun!!"
+	descrip:  .asciiz "This is a turtle game where you control the turtle to eat\nfood objects (yellow), and avoid trash objects (dark red).\nYou lose when you run out of lives.\n\nTo start, hit OK on the dialog and:\n - Use (W, A, S, D) to move and E to exit anytime.\n - Use R to reset the level in case of an issue.\nHave fun!!"
 	diffi:	  .asciiz "Choose your difficulty (Enter a number):\n1 - Easy | 2 - Medium | 3 - Hard | 4 - Extreme | 5 - IMPOSSIBLE"
 	
 	text:	  .space  2048

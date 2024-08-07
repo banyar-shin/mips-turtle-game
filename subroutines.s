@@ -509,81 +509,14 @@ PrintLives: # PrintLives (lives)
 	jr $ra			# jumps back to return address
 	
 # Subroutine to display game over text and random fact
-GameOver:	
+GameOver:
 	la $a0, gameover	# loads address of text to $a0
 	move $a1, $s4		# loads score to display to $a1
 	li $v0, 56		# loads opcode for message dialog int
 	syscall			# displays message dialong int
-
-	# Open (for reading) from a pre-made file
-  	li   $v0, 13       # loads opcode for opening a file
-  	la   $a0, file     # output file name
-  	li   $a1, 0        # Open for read (flags are 0: read, 1: write)
-  	li   $a2, 0        # mode is ignored
-  	syscall            # open a file (file descriptor returned in $v0)
-  	
-  	move $s6, $v0      # save the file descriptor 
-
- 	# Read from just opened
-  	li   $v0, 14	# loads opcode to read from file
-  	move $a0, $s6	# file descriptor 
-  	la   $a1, text	# address of buffer from which to write
-  	li   $a2, 2048	# hardcoded buffer length
-  	syscall		# reads from opened file
-  
-  	# Generate random number
-  	li $a1, 16	# here you set $a1 to the max bound
-  	li $v0, 42	# loads opcode for generating a random int
-  	syscall		# generates the random number
-    
-  	move $t0, $a0 	# save random number to $t0
-  	
-	la $t1, text	# set $t1 equal to start of address
-	la $t3, print	# loads string to be printed which is currently empty
-
-  	# Label for start of loop to find the sentence to print
-  	FindSentence:
-  	
-  	beq $t0, $zero, PrintLoop	# if counter = 0, branch to quit loop (edge case)
-  	
-  	lb $t2, 0($t1)			# loads character to register
-  	beq $t2, 10, Decrement		# if character = '\n', branch to decrement
-  	addi $t1, $t1, 1		# increment to next character
-  	j FindSentence			# jumps back to main loop
-  
-  	# Label for decrementing the counter when '\n' is found
-  	Decrement:
-  	
-  	addi $t0, $t0, -1		# decrement the counter
-  	beq $t0, $zero, SentenceStart	# if counter = 0, branch to quit loop
-  	addi $t1, $t1, 1		# move to next character
-  	j FindSentence			# jumps back to main loop
-    
-    	# Label for when the sentence to print is found
-	SentenceStart:
 	
-	addi $t1, $t1, 1	# move to next character, start of sentence
-	
-	# Label to start loop that prints the sentence
-	PrintLoop:
-	
-	lb $t2, 0($t1)		# loads character to register
-	beq $t2, 10, Done	# if character = '\n', branch to complete printing
-	
-	sb $t2, ($t3)		# stores the character in the string to be printed
-	
-	addi $t3, $t3, 1	# moves to next character 
-	addi $t1, $t1, 1	# moves to next character
-	
-	j PrintLoop		# jumps back to print next character
-	
-	# Label to finish printing random sentence
+	# Label for endpoint
 	Done:
-	
-	la $a0, heresa		# loads address of first string to $a0
-	la $a1, print		# loads address of second string to $a1
-	li $v0, 59		# loads opcode for message dialog
-	syscall			# prints message dialog
 	
 	li $v0, 10	# calls opcode for terminate program
 	syscall		# terminates program
